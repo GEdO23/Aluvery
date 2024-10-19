@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,9 +43,21 @@ class MainActivity : ComponentActivity() {
         setContent {
             AluveryTheme {
                 Surface {
-                    ProductItem()
+                    ProductsSection()
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ProductsSection() {
+    Column {
+        Text(text = "Promoções")
+        Row {
+            ProductItem()
+            ProductItem()
+            ProductItem()
         }
     }
 }
@@ -93,7 +107,15 @@ fun ProductItem() {
     }
 }
 
-@Preview(group = "ProductComponents", showBackground = true)
+@Preview(group = "ProductsComponents", showBackground = true)
+@PreviewLightDark
+@Composable
+private fun ProductsSectionPreview() {
+    ProductsSection()
+}
+
+@Preview(group = "ProductsComponents", showBackground = true)
+@PreviewLightDark
 @Composable
 private fun ProductItemPreview() {
     ProductItem()
