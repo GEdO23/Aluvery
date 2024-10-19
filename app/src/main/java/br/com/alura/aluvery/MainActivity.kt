@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,42 +50,44 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ProductItem() {
-    Column(
-        Modifier
-            .heightIn(250.dp, 300.dp)
-            .width(200.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .height(100.dp)
-                .background(brush = Brush.horizontalGradient(listOf(Teal200, Purple500)))
-                .fillMaxWidth()
+    Surface(Modifier.padding(8.dp), shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
+        Column(
+            Modifier
+                .heightIn(250.dp, 300.dp)
+                .width(200.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = "Product's Image",
-                Modifier
-                    .size(100.dp)
-                    .offset(y = (50).dp)
-                    .clip(shape = CircleShape)
-                    .align(Alignment.BottomCenter)
-            )
-        }
-        Spacer(modifier = Modifier.height(50.dp))
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = LoremIpsum(50).values.first(),
-                fontSize = 18.sp,
-                fontWeight = FontWeight(700),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = "R$ 14,99",
-                modifier = Modifier.padding(top = 8.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400)
-            )
+            Box(
+                modifier = Modifier
+                    .height(100.dp)
+                    .background(brush = Brush.horizontalGradient(listOf(Teal200, Purple500)))
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = "Product's Image",
+                    Modifier
+                        .size(100.dp)
+                        .offset(y = (50).dp)
+                        .clip(shape = CircleShape)
+                        .align(Alignment.BottomCenter)
+                )
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = LoremIpsum(50).values.first(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(700),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = "R$ 14,99",
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(400)
+                )
+            }
         }
     }
 }
