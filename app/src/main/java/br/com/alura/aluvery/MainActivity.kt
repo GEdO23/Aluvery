@@ -56,9 +56,10 @@ fun ProductItem() {
                 .heightIn(250.dp, 300.dp)
                 .width(200.dp)
         ) {
+            val imageSize = 100.dp
             Box(
                 modifier = Modifier
-                    .height(100.dp)
+                    .height(imageSize)
                     .background(brush = Brush.horizontalGradient(listOf(Teal200, Purple500)))
                     .fillMaxWidth()
             ) {
@@ -66,13 +67,13 @@ fun ProductItem() {
                     painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = "Product's Image",
                     Modifier
-                        .size(100.dp)
-                        .offset(y = (50).dp)
+                        .size(imageSize)
+                        .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter)
                 )
             }
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(imageSize / 2))
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = LoremIpsum(50).values.first(),
