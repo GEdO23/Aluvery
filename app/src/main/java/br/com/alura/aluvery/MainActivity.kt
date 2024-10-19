@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -52,16 +53,18 @@ fun ProductItem() {
                 .height(100.dp)
                 .background(brush = Brush.horizontalGradient(listOf(Teal200, Purple500)))
                 .fillMaxWidth()
-        )
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "Product's Image",
-            Modifier
-                .size(100.dp)
-                .offset(y = (-50).dp)
-                .clip(shape = CircleShape)
-                .align(Alignment.CenterHorizontally)
-        )
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = "Product's Image",
+                Modifier
+                    .size(100.dp)
+                    .offset(y = (50).dp)
+                    .clip(shape = CircleShape)
+                    .align(Alignment.BottomCenter)
+            )
+        }
+        Spacer(modifier = Modifier.height(50.dp))
         Text(text = "Texto 1")
         Text(text = "Texto 2")
     }
