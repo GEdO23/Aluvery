@@ -95,7 +95,7 @@ fun ProductItem(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .height(imageSize)
-                    .background(brush = Brush.horizontalGradient(listOf(Teal200, Purple500)))
+                    .background(brush = Brush.horizontalGradient(listOf(Purple500, Teal200)))
                     .fillMaxWidth()
             ) {
                 Image(

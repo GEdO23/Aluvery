@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -36,44 +38,60 @@ import br.com.alura.aluvery.R
 import br.com.alura.aluvery.ui.theme.Purple500
 import br.com.alura.aluvery.ui.theme.Teal200
 
-
-@Preview(group = "Challenge 1", showBackground = true)
 @Composable
-private fun Challenge1Preview() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .width(100.dp)
-                .fillMaxHeight()
-                .background(Color.Blue)
-        )
-        Column {
-            Text(
-                text = "Test 1", modifier = Modifier
+fun ProductCardWithDescription(modifier: Modifier = Modifier) {
+    Surface(modifier = modifier, shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
+        Column(
+            Modifier
+                .heightIn(250.dp, 300.dp)
+                .width(200.dp)
+        ) {
+            val imageSize = 100.dp
+            Box(
+                modifier = Modifier
+                    .height(imageSize)
+                    .background(brush = Brush.horizontalGradient(listOf(Purple500, Teal200)))
                     .fillMaxWidth()
-                    .background(Color.LightGray)
-                    .padding(16.dp)
-            )
-            Text(
-                text = "Test 2", modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(Color.White)
-                    .padding(16.dp)
-            )
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = "Product's Image",
+                    Modifier
+                        .size(imageSize)
+                        .offset(y = imageSize / 2)
+                        .clip(shape = CircleShape)
+                        .align(Alignment.BottomCenter)
+                )
+            }
+            Spacer(modifier = Modifier.height(imageSize / 2))
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = LoremIpsum(50).values.first(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(700),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = "R$ 14,99",
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(400)
+                )
+            }
+            Column(Modifier.background(Purple500)) { 
+                Text(text = LoremIpsum(50).values.first())
+            }
         }
     }
 }
 
-@Preview(group = "Challenge 2", showBackground = true)
+@Preview(group = "Challenge 3")
 @Composable
-private fun Challenge2Preview() {
-    ProductKitCard()
+private fun ProductCardWithDescriptionPreview() {
+    ProductCardWithDescription()
 }
+
 
 @Composable
 fun ProductKitCard(modifier: Modifier = Modifier) {
@@ -158,6 +176,44 @@ fun ProductKitText(
         overflow = TextOverflow.Ellipsis,
         modifier = modifier,
     )
+}
+
+@Preview(group = "Challenge 1", showBackground = true)
+@Composable
+private fun Challenge1Preview() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .width(100.dp)
+                .fillMaxHeight()
+                .background(Color.Blue)
+        )
+        Column {
+            Text(
+                text = "Test 1", modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.LightGray)
+                    .padding(16.dp)
+            )
+            Text(
+                text = "Test 2", modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(Color.White)
+                    .padding(16.dp)
+            )
+        }
+    }
+}
+
+@Preview(group = "Challenge 2", showBackground = true)
+@Composable
+private fun Challenge2Preview() {
+    ProductKitCard()
 }
 
 @Preview(group = "Challenge 2")
