@@ -3,11 +3,14 @@ package br.com.alura.aluvery.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -15,8 +18,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,23 +44,24 @@ import br.com.alura.aluvery.ui.theme.Purple500
 import br.com.alura.aluvery.ui.theme.Teal200
 
 @Composable
-fun ProductCardWithDescription(modifier: Modifier = Modifier) {
+fun ProductCard(modifier: Modifier = Modifier, description: String = "") {
     Surface(modifier = modifier, shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
         Column(
             Modifier
-                .heightIn(250.dp, 300.dp)
+                .heightIn(250.dp, 260.dp)
                 .width(200.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             val imageSize = 100.dp
             Box(
-                modifier = Modifier
+                Modifier
                     .height(imageSize)
-                    .background(brush = Brush.horizontalGradient(listOf(Purple500, Teal200)))
+                    .background(Brush.horizontalGradient(listOf(Purple500, Teal200)))
                     .fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    contentDescription = "Product's Image",
+                    painterResource(id = R.drawable.ic_launcher_background),
+                    "Product's Image",
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
@@ -63,24 +69,31 @@ fun ProductCardWithDescription(modifier: Modifier = Modifier) {
                         .align(Alignment.BottomCenter)
                 )
             }
-            Spacer(modifier = Modifier.height(imageSize / 2))
-            Column(modifier = Modifier.padding(16.dp)) {
+            Spacer(Modifier.height(imageSize / 2))
+
+            Column(Modifier.padding(16.dp)) {
                 Text(
-                    text = LoremIpsum(50).values.first(),
+                    LoremIpsum(50).values.first(),
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "R$ 14,99",
-                    modifier = Modifier.padding(top = 8.dp),
+                    "R$ 14,99", Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
                 )
             }
-            Column(Modifier.background(Purple500)) { 
-                Text(text = LoremIpsum(50).values.first())
+
+            if (description.isNotBlank()) {
+                Column(
+                    Modifier
+                        .background(Purple500)
+                        .padding(16.dp)
+                ) {
+                    Text(description, color = Color.White)
+                }
             }
         }
     }
@@ -88,8 +101,21 @@ fun ProductCardWithDescription(modifier: Modifier = Modifier) {
 
 @Preview(group = "Challenge 3")
 @Composable
-private fun ProductCardWithDescriptionPreview() {
-    ProductCardWithDescription()
+private fun ProductCardPreview() {
+    Surface(Modifier.fillMaxSize()) {
+        Row(
+            Modifier
+                .padding(vertical = 16.dp)
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Spacer(Modifier)
+            ProductCard(description = LoremIpsum(50).values.first())
+            ProductCard()
+            ProductCard(description = LoremIpsum(50).values.first())
+            Spacer(Modifier)
+        }
+    }
 }
 
 
