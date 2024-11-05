@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,9 +38,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alura.aluvery.extensions.toBrazilianCurrency
+import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.ui.theme.Purple500
 import br.com.alura.aluvery.ui.theme.Teal200
+import java.math.BigDecimal
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,16 +79,37 @@ fun ProductsSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Spacer(Modifier)
-            ProductItem()
-            ProductItem()
-            ProductItem()
+            ProductItem(
+                product = Product(
+                    name = "Hamburguer",
+                    price = BigDecimal("12.99"),
+                    image = R.drawable.burger
+                )
+            )
+            ProductItem(
+                product = Product(
+                    name = "Pizza",
+                    price = BigDecimal("19.99"),
+                    image = R.drawable.pizza
+                )
+            )
+            ProductItem(
+                product = Product(
+                    name = "Batata frita",
+                    price = BigDecimal("7.99"),
+                    image = R.drawable.fries
+                )
+            )
             Spacer(Modifier)
         }
     }
 }
 
 @Composable
-fun ProductItem(modifier: Modifier = Modifier) {
+fun ProductItem(
+    modifier: Modifier = Modifier,
+    product: Product
+) {
     Surface(modifier = modifier, shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
         Column(
             Modifier
@@ -99,26 +124,27 @@ fun ProductItem(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = painterResource(id = product.image),
                     contentDescription = "Product's Image",
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
-                        .align(Alignment.BottomCenter)
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = LoremIpsum(50).values.first(),
+                    text = product.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "R$ 14,99",
+                    text = product.price.toBrazilianCurrency(),
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
@@ -147,7 +173,14 @@ private fun ProductsSectionPreview() {
 private fun ProductItemPreview() {
     AluveryTheme {
         Surface {
-            ProductItem(Modifier.padding(16.dp))
+            ProductItem(
+                modifier = Modifier.padding(16.dp),
+                product = Product(
+                    name = LoremIpsum(50).values.first(),
+                    price = BigDecimal("14.99"),
+                    image = R.drawable.ic_launcher_background
+                )
+            )
         }
     }
 }
