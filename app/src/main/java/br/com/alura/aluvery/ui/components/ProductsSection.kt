@@ -15,15 +15,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alura.aluvery.R
 import br.com.alura.aluvery.model.Product
-import java.math.BigDecimal
+import br.com.alura.aluvery.sampledata.sampleProducts
 
 @Composable
-fun ProductsSection(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
+fun ProductsSection(
+    title: String,
+    products: List<Product>
+) {
+    Column {
         Text(
-            text = "Promoções",
+            text = title,
             Modifier.padding(start = 16.dp, end = 16.dp),
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
@@ -36,27 +38,15 @@ fun ProductsSection(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Spacer(Modifier)
-            ProductItem(
-                product = Product(
-                    name = "Hamburguer",
-                    price = BigDecimal("12.99"),
-                    image = R.drawable.burger
+            for (p in products) {
+                ProductItem(
+                    product = Product(
+                        name = p.name,
+                        price = p.price,
+                        image = p.image
+                    )
                 )
-            )
-            ProductItem(
-                product = Product(
-                    name = "Pizza",
-                    price = BigDecimal("19.99"),
-                    image = R.drawable.pizza
-                )
-            )
-            ProductItem(
-                product = Product(
-                    name = "Batata frita",
-                    price = BigDecimal("7.99"),
-                    image = R.drawable.fries
-                )
-            )
+            }
             Spacer(Modifier)
         }
     }
@@ -65,5 +55,8 @@ fun ProductsSection(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun ProductsSectionPreview() {
-    ProductsSection()
+    ProductsSection(
+        title = "Promoções",
+        products = sampleProducts
+    )
 }
